@@ -29,10 +29,10 @@ contract LumiiiReflections is LumiiiStorage, Ownable {
         @param _amount Amount to calculate tax on
     */
     function calculateFees(uint256 _amount) public view returns (uint256, uint256, uint256, uint256) {
-        uint256 tax = _amount.mul(_taxFee).div(10**2);
-        uint256 liquidity= _amount.mul(_liquidityFee).div(10**2);
-        uint256 charity = _amount.mul(_charityFee).div(10**2);
-        uint256 ops = _amount.mul(_opsFee).div(10**2);
+        uint256 tax = _amount.mul(_taxFee).div(10**4);
+        uint256 liquidity= _amount.mul(_liquidityFee).div(10**4);
+        uint256 charity = _amount.mul(_charityFee).div(10**4);
+        uint256 ops = _amount.mul(_opsFee).div(10**4);
 
         return (tax, liquidity, charity, ops);
     }
@@ -42,7 +42,7 @@ contract LumiiiReflections is LumiiiStorage, Ownable {
     */
     function setMaxTxPercent(uint256 maxTxPercent) external onlyOwner() {
         _maxTxAmount = _tTotal.mul(maxTxPercent).div(
-            10**2
+            10**4
         );
     }
 
@@ -50,7 +50,7 @@ contract LumiiiReflections is LumiiiStorage, Ownable {
         @notice Sets new fees
     */
     function setFees(uint256 taxFee, uint256 liquidityFee, uint256 charityFee, uint256 opsFee) external onlyOwner() {
-        require(opsFee + taxFee + liquidityFee + charityFee <= 10);
+        require(opsFee + taxFee + liquidityFee + charityFee <= 10000);
 
         _taxFee = taxFee;
         _liquidityFee = liquidityFee;
@@ -259,18 +259,24 @@ contract LumiiiReflections is LumiiiStorage, Ownable {
     }
     
     /** 
-        @notice Excludes a user from rewards and fees
+        @notice Excludes a user from rewards
         @param account Address to exclude
     */
     function excludeFromReward(address account) public onlyOwner() {
-        require(account != 0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff, 'We can not exclude Uniswap router.');
-        _isExcludedFromFee[account] = true;
         require(!_isExcluded[account], "Account is already excluded");
         if(_rOwned[account] > 0) {
             _tOwned[account] = tokenFromReflection(_rOwned[account]);
         }
         _isExcluded[account] = true;
         _excluded.push(account);
+    }
+
+    /** 
+    @notice Excludes a user from fees
+    @param account Address to exclude
+    */
+    function excludeFromFee(address account) public onlyOwner() {
+        _isExcludedFromFee[account] = true;
     }
 
     /** 

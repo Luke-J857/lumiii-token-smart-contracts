@@ -7,9 +7,11 @@
 const hre = require("hardhat");
 
 async function main() {
-  const charityWallet = "0x2040Cf404725D9D3d015163e25b2f1CC413CF295";
-  const opsWallet = "0xFf128A8eB6AE0463ed680243513432436662CC99";
-  const routerAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+  const charityWallet = "0x4B6fF9Ddd2dAD1033Ee6f07639e151FAF801e5E9";
+  const opsWallet = "0x9528bd68B9Aefc95ddaddeB492b17801a11D8364";
+  // const routerAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"; // uniswap router
+  // const routerAddress = "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"; // quickswap router
+  const routerAddress = "0xc97b81B8a38b9146010Df85f1Ac714aFE1554343"; // okc router
   
   const Lumiii  = await hre.ethers.getContractFactory("LumiiiToken"); 
   const lumiii = await Lumiii.deploy(charityWallet, opsWallet, routerAddress);

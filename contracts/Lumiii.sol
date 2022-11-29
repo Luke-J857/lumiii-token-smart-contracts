@@ -20,7 +20,7 @@ contract LumiiiToken is Context, IERC20, LumiiiGovernance, LumiiiReflections {
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(routerAddress);
          // Create a uniswap pair for this new token 
 
-        uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory()).createPair(address(this), _uniswapV2Router.WETH());
+        uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory()).createPair(address(this), 0x8F8526dbfd6E38E3D8307702cA8469Bae6C56C15);
 
         // set the rest of the contract variables
         uniswapV2Router = _uniswapV2Router;
@@ -276,7 +276,7 @@ contract LumiiiToken is Context, IERC20, LumiiiGovernance, LumiiiReflections {
         // generate the uniswap pair path of token -> weth
         address[] memory path = new address[](2);
         path[0] = address(this);
-        path[1] = uniswapV2Router.WETH();
+        path[1] = 0x8F8526dbfd6E38E3D8307702cA8469Bae6C56C15;
 
         _approve(address(this), address(uniswapV2Router), tokenAmount);
 
